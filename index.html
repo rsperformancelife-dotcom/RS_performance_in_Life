@@ -281,7 +281,7 @@ footer span{color:var(--green)}
 <section class="sobre" id="sobre">
   <div class="container">
     <div class="sobre-inner">
-      <img src="https://i.imgur.com/hHa3Qgz.jpeg" alt="Rodrigo Santos" class="sobre-avatar" referrerpolicy="no-referrer" crossorigin="anonymous">
+      <img id="rodrigo-foto" alt="Rodrigo Santos" class="sobre-avatar">
       <div class="sobre-text">
         <h2>Olá, sou o Rodrigo 👋</h2>
         <p>Personal Trainer online e presencial na zona de Lisboa, especializado em ajudar pessoas que se sentem sem energia e querem perder peso — de forma real, sustentável e adaptada à tua vida.</p>
@@ -1029,6 +1029,33 @@ function sendAdminMsg(){
 
 // INIT
 calcPrice();
+
+// Carregar foto do Rodrigo via fetch para evitar bloqueios CORS
+(function(){
+  const img = document.getElementById('rodrigo-foto');
+  // Tenta postimages primeiro, depois imgur como fallback
+  const urls = [
+    'https://i.postimg.cc/CKhGbsr2/foto.jpg',
+    'https://i.imgur.com/hHa3Qgz.jpeg'
+  ];
+  let idx = 0;
+  function tryNext() {
+    if(idx >= urls.length) {
+      // Se tudo falhar, mostra iniciais
+      img.style.display = 'none';
+      const parent = img.parentNode;
+      const div = document.createElement('div');
+      div.className = 'sobre-avatar';
+      div.style.cssText = 'display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e6eb5,#1a2a4a);color:#fff;font-size:3rem;font-weight:800';
+      div.textContent = 'RS';
+      parent.insertBefore(div, img);
+      return;
+    }
+    img.src = urls[idx];
+    img.onerror = () => { idx++; tryNext(); };
+  }
+  tryNext();
+})();
 </script>
 </body>
 </html>
