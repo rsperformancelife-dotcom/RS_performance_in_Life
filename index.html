@@ -281,7 +281,7 @@ footer span{color:var(--green)}
 <section class="sobre" id="sobre">
   <div class="container">
     <div class="sobre-inner">
-      <img src="https://i.imgur.com/hHa3Qgz.jpeg" alt="Rodrigo Santos" class="sobre-avatar">
+      <img src="https://i.imgur.com/hHa3Qgz.jpeg" alt="Rodrigo Santos" class="sobre-avatar" referrerpolicy="no-referrer" crossorigin="anonymous">
       <div class="sobre-text">
         <h2>Olá, sou o Rodrigo 👋</h2>
         <p>Personal Trainer online e presencial na zona de Lisboa, especializado em ajudar pessoas que se sentem sem energia e querem perder peso — de forma real, sustentável e adaptada à tua vida.</p>
@@ -313,7 +313,7 @@ footer span{color:var(--green)}
       <div class="plan-card popular"><div class="popular-badge">⭐ Mais Popular</div><div class="plan-icon">🔥</div><div class="plan-name">Trimestral</div><div class="plan-duration">Presencial · 3 meses</div><div class="plan-price"><sup>€</sup>300<sub>/trimestre</sub></div><div class="plan-savings">Poupa 60€</div><ul class="plan-features"><li>Sessões presenciais em Lisboa</li><li>Plano de treino incluído</li><li>Acompanhamento prioritário</li><li>Acesso à área de cliente</li><li>Avaliação mensal</li></ul><button class="plan-btn" onclick="openModal('Presencial Trimestral','300','STRIPE_PT')">Comprar Plano</button></div>
       <div class="plan-card"><div class="plan-icon">🏆</div><div class="plan-name">Semestral</div><div class="plan-duration">Presencial · 6 meses</div><div class="plan-price"><sup>€</sup>650<sub>/semestre</sub></div><div class="plan-savings">Poupa 70€</div><ul class="plan-features"><li>Sessões presenciais em Lisboa</li><li>Plano de treino incluído</li><li>Acompanhamento prioritário</li><li>Acesso à área de cliente</li><li>Avaliação mensal</li><li>Plano nutricional incluído</li></ul><button class="plan-btn" onclick="openModal('Presencial Semestral','650','STRIPE_PS')">Comprar Plano</button></div>
     </div>
-    <div class="mbway-banner"><span style="font-size:1.5rem">📱</span><p><strong>Preferes pagar por MB Way?</strong><br>Envia o comprovativo para o WhatsApp e o teu plano é ativado em minutos.</p><button class="mbway-btn" onclick="window.open('https://wa.me/351935723352?text=Olá Rodrigo, quero pagar por MB Way: ','_blank')">Pagar por MB Way</button></div>
+    <div class="mbway-banner"><span style="font-size:1.5rem">📱</span><p><strong>Pagamento por MB Way.</strong><br>Preferes transferência bancária ou outro método? Envia mensagem e combinamos.</p><button class="mbway-btn" onclick="window.open('https://wa.me/351935723352?text=Olá Rodrigo, quero pagar por outro método: ','_blank')">💬 Falar no WhatsApp</button></div>
   </div>
 </section>
 <section class="calc-section" id="calculadora">
@@ -338,8 +338,8 @@ footer span{color:var(--green)}
         </div>
       </div>
       <div class="calc-btns">
-        <button class="cpay" style="background:var(--green);color:#fff" onclick="conjStripe()">💳 Pagar com Cartão</button>
-        <button class="cpay" style="background:var(--red);color:#fff" onclick="conjMBWay()">📱 Pagar por MB Way</button>
+        <button class="cpay" style="background:#e60028;color:#fff" onclick="conjMBWay()">📱 Pagar por MB Way</button>
+        <button class="cpay" style="background:var(--light);color:var(--gray);border:1px solid var(--border)" onclick="conjOutro()">💬 Outro método</button>
       </div>
     </div>
   </div>
@@ -603,12 +603,12 @@ footer span{color:var(--green)}
 <!-- MODAL -->
 <div class="modal-overlay" id="pay-modal">
   <div class="modal-box">
-    <div style="font-size:2rem">💳</div>
+    <div style="font-size:2rem">📱</div>
     <h3 id="modal-plan-name">Plano</h3>
-    <p id="modal-plan-price"></p>
+    <p id="modal-plan-price" style="font-size:1.5rem;font-weight:800;color:var(--navy);margin:.3rem 0 1.2rem"></p>
     <div class="modal-btns">
-      <button style="background:var(--navy);color:#fff" onclick="payStripe()">💳 Pagar com Cartão (Stripe)</button>
-      <button style="background:var(--red);color:#fff" onclick="payMBWay()">📱 Pagar por MB Way</button>
+      <button style="background:#e60028;color:#fff" onclick="payMBWay()">📱 Pagar por MB Way</button>
+      <button style="background:var(--light);color:var(--gray);border:1px solid var(--border)" onclick="payOutro()">💬 Outro método de pagamento</button>
     </div>
     <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
   </div>
@@ -643,12 +643,12 @@ function calcPrice(){
   document.getElementById('b-total').textContent=total+'€';
   document.getElementById('calc-detail').textContent='Plano '+dur+' · '+ts+' sessões · 25€/sessão';
 }
-function conjStripe(){alert('Contacta o Rodrigo para personalizar o pagamento.');window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá! Plano Conjunto '+conjDur+' '+conjSessTotal+' sessões. Total: '+conjTotal+'€'),'_blank')}
-function conjMBWay(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá! Quero pagar por MB Way Plano Conjunto '+conjDur+' '+conjSessTotal+' sessões. Total: '+conjTotal+'€. MB Way: '),'_blank')}
-function openModal(plan,price,link){currentModalPlan=plan;currentModalPrice=price;currentModalLink=link;document.getElementById('modal-plan-name').textContent='Plano '+plan;document.getElementById('modal-plan-price').textContent=price+'€ — como queres pagar?';document.getElementById('pay-modal').classList.add('open')}
+function conjMBWay(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá! Quero pagar por MB Way o Plano Conjunto '+conjDur+' com '+conjSessTotal+' sessões. Total: '+conjTotal+'€. O meu número MB Way é: '),'_blank')}
+function conjOutro(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá Rodrigo! Quero o Plano Conjunto '+conjDur+' com '+conjSessTotal+' sessões ('+conjTotal+'€) mas prefiro outro método de pagamento.'),'_blank')}
+function openModal(plan,price,link){currentModalPlan=plan;currentModalPrice=price;currentModalLink=link;document.getElementById('modal-plan-name').textContent='Plano '+plan;document.getElementById('modal-plan-price').textContent=price+'€';document.getElementById('pay-modal').classList.add('open')}
 function closeModal(){document.getElementById('pay-modal').classList.remove('open')}
-function payStripe(){if(currentModalLink.startsWith('STRIPE')){alert('⚠️ Insere o link Stripe.');return}window.open(currentModalLink,'_blank');closeModal()}
-function payMBWay(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Quero pagar por MB Way: '+currentModalPlan+' ('+currentModalPrice+'€). MB Way: '),'_blank');closeModal()}
+function payMBWay(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá Rodrigo! Quero pagar por MB Way o plano: '+currentModalPlan+' ('+currentModalPrice+'€). O meu número MB Way é: '),'_blank');closeModal()}
+function payOutro(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá Rodrigo! Quero subscrever o plano '+currentModalPlan+' ('+currentModalPrice+'€) mas prefiro outro método de pagamento. Podes ajudar?'),'_blank');closeModal()}
 document.getElementById('pay-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 function enviarMsg(){const n=document.getElementById('cf-nome').value,e=document.getElementById('cf-email').value,m=document.getElementById('cf-msg').value;if(!n||!e||!m){alert('Preenche todos os campos.');return}window.open('https://wa.me/351935723352?text='+encodeURIComponent('Nome: '+n+'\nEmail: '+e+'\nMensagem: '+m),'_blank')}
 
