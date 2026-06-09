@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RS Performance – Fitness for Everyone</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--blue:#1e6eb5;--green:#5a9e1a;--light:#f4f7fb;--white:#fff;--gray:#6b7280;--border:#e2e8f0;--text:#1e293b;--red:#e60028}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--white);scroll-behavior:smooth}
+a{text-decoration:none;color:inherit}
+/* NAV */
+nav{background:var(--navy);position:sticky;top:0;z-index:100;padding:0 2rem;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{color:#fff;font-size:1.3rem;font-weight:800;letter-spacing:1px;cursor:pointer}
+.nav-logo span{color:#5a9e1a}
+.nav-links{display:flex;gap:1.4rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,.8);font-size:.85rem;cursor:pointer;transition:color.2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:var(--green);color:#fff;border:none;padding:.5rem 1.1rem;border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer;transition:background.2s;font-family:inherit}
+.nav-cta:hover{background:#4a8a10}
+/* PAGE */
+.page{display:none}.page.active{display:block}
+/* HERO */
+.hero{background:linear-gradient(135deg,#0d1f3c,#1a2a4a 60%,#0d3320);color:#fff;padding:5rem 2rem 4rem;text-align:center}
+.hero-badge{display:inline-block;background:rgba(90,158,26,.2);border:1px solid rgba(90,158,26,.5);color:#7dc13a;padding:.3rem 1rem;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:1px;margin-bottom:1.5rem;text-transform:uppercase}
+.hero h1{font-size:3rem;font-weight:800;line-height:1.1;margin-bottom:1rem}
+.hero h1 span{color:#5a9e1a}
+.hero p{font-size:1.1rem;opacity:.85;max-width:520px;margin:0 auto 2rem;line-height:1.7}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--green);color:#fff;padding:.85rem 2rem;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:background.2s;font-family:inherit}
+.btn-primary:hover{background:#4a8a10}
+.btn-outline{background:transparent;color:#fff;padding:.85rem 2rem;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;border:2px solid rgba(255,255,255,.4);transition:all.2s;font-family:inherit}
+.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.hero-stats{display:flex;gap:2.5rem;justify-content:center;margin-top:3.5rem;flex-wrap:wrap}
+.stat-n{font-size:2rem;font-weight:800;color:#5a9e1a}
+.stat-l{font-size:.75rem;opacity:.65;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px}
+/* SECTIONS */
+section{padding:4.5rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-title{text-align:center;font-size:2rem;font-weight:700;color:var(--navy);margin-bottom:.4rem}
+.section-sub{text-align:center;color:var(--gray);margin-bottom:3rem;font-size:1rem;line-height:1.6}
+.divider{width:50px;height:4px;background:var(--green);margin:.7rem auto 1rem;border-radius:2px}
+/* SOBRE */
+.sobre{background:var(--light)}
+.sobre-inner{display:flex;gap:3rem;align-items:center;flex-wrap:wrap}
+.sobre-avatar{width:200px;height:200px;border-radius:50%;object-fit:cover;object-position:top;border:4px solid var(--green);flex-shrink:0;box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.sobre-text h2{font-size:1.7rem;color:var(--navy);margin-bottom:.8rem;font-weight:700}
+.sobre-text p{color:var(--gray);line-height:1.75;margin-bottom:1rem;font-size:.97rem}
+.sobre-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
+.tag{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:.3rem .9rem;font-size:.8rem;color:var(--navy);font-weight:600}
+/* PLANOS */
+.tabs{display:flex;justify-content:center;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.tab{padding:.6rem 1.6rem;border-radius:25px;border:2px solid var(--border);background:var(--white);color:var(--gray);font-weight:600;cursor:pointer;font-size:.88rem;transition:all.2s;font-family:inherit}
+.tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+.plan-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:2rem 1.5rem;text-align:center;transition:all.3s;position:relative}
+.plan-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.08)}
+.plan-card.popular{border-color:var(--green);box-shadow:0 8px 25px rgba(90,158,26,.15)}
+.popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:.72rem;font-weight:700;padding:.3rem 1rem;border-radius:20px;white-space:nowrap}
+.plan-icon{font-size:2rem;margin-bottom:.8rem}
+.plan-name{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:.2rem}
+.plan-duration{font-size:.82rem;color:var(--gray);margin-bottom:1.2rem}
+.plan-price{font-size:2.5rem;font-weight:800;color:var(--navy)}
+.plan-price sup{font-size:1.1rem;font-weight:600;vertical-align:super}
+.plan-price sub{font-size:.9rem;font-weight:400;color:var(--gray)}
+.plan-savings{font-size:.8rem;color:var(--green);font-weight:600;margin:.3rem 0 1.2rem;min-height:1.2em}
+.plan-features{list-style:none;text-align:left;margin-bottom:1.5rem}
+.plan-features li{padding:.35rem 0;font-size:.87rem;color:var(--gray);display:flex;align-items:flex-start;gap:.5rem;border-bottom:1px solid var(--border)}
+.plan-features li:last-child{border:none}
+.plan-features li::before{content:"✓";color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+.plan-btn{width:100%;padding:.85rem;border-radius:8px;border:2px solid var(--navy);background:transparent;color:var(--navy);font-weight:700;cursor:pointer;transition:all.2s;font-size:.93rem;font-family:inherit}
+.plan-btn:hover,.plan-card.popular .plan-btn{background:var(--navy);color:#fff}
+.plan-card.popular .plan-btn:hover{background:var(--green);border-color:var(--green)}
+.mbway-banner{background:var(--light);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem;max-width:600px;margin:2rem auto 0;flex-wrap:wrap;justify-content:center;text-align:center}
+.mbway-banner p{font-size:.88rem;color:var(--gray);line-height:1.5}
+.mbway-btn{background:var(--red);color:#fff;border:none;padding:.6rem 1.2rem;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;white-space:nowrap;font-family:inherit}
+/* CALC */
+.calc-section{background:var(--navy)}
+.calc-section .section-title{color:#fff}
+.calc-section .section-sub{color:rgba(255,255,255,.6)}
+.calc-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2.5rem;max-width:680px;margin:0 auto}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.calc-label{color:rgba(255,255,255,.75);font-size:.83rem;font-weight:600;margin-bottom:.5rem;display:block;text-transform:uppercase;letter-spacing:.5px}
+.calc-select{width:100%;padding:.75rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:.93rem;cursor:pointer;font-family:inherit}
+.calc-select option{background:#1a2a4a}
+.calc-result{background:rgba(90,158,26,.12);border:1px solid rgba(90,158,26,.35);border-radius:12px;padding:1.5rem;text-align:center;margin-top:1.5rem}
+.calc-result-label{color:rgba(255,255,255,.65);font-size:.88rem;margin-bottom:.4rem}
+.calc-result-price{font-size:3rem;font-weight:800;color:#7dc13a}
+.calc-result-detail{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:.4rem}
+.calc-breakdown{display:flex;justify-content:center;gap:2rem;margin-top:1rem;flex-wrap:wrap}
+.calc-item-val{font-size:1.15rem;font-weight:700;color:#fff}
+.calc-item-lbl{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:.2rem}
+.calc-btns{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}
+.cpay{padding:.8rem 1.5rem;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;border:none;font-family:inherit;transition:opacity.2s}
+.cpay:hover{opacity:.85}
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.contact-info h3{font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:.8rem}
+.contact-info p{color:var(--gray);line-height:1.75;margin-bottom:1.5rem;font-size:.95rem}
+.contact-item{display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem;color:var(--gray);font-size:.93rem}
+.contact-icon{width:38px;height:38px;border-radius:10px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.cfbox{background:var(--light);border-radius:16px;padding:2rem}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.83rem;font-weight:600;color:var(--navy);margin-bottom:.4rem}
+.fg input,.fg textarea,.fg select{width:100%;padding:.7rem 1rem;border:1px solid var(--border);border-radius:8px;font-size:.92rem;outline:none;background:var(--white);color:var(--text);font-family:inherit;transition:border.2s}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--blue)}
+.fg textarea{resize:vertical}
+.wa-btn{display:inline-flex;align-items:center;gap:.5rem;background:#25d366;color:#fff;padding:.8rem 1.5rem;border-radius:8px;font-weight:700;font-size:.93rem;cursor:pointer;border:none;margin-top:1rem;font-family:inherit}
+.wa-btn:hover{background:#1da851}
+.fsub{width:100%;padding:.9rem;background:var(--navy);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit}
+.fsub:hover{background:var(--blue)}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:2rem;max-width:420px;width:90%;text-align:center}
+.modal-box h3{color:var(--navy);margin:.5rem 0 .3rem;font-size:1.1rem}
+.modal-box p{color:var(--gray);font-size:.87rem;margin-bottom:1.5rem}
+.modal-btns{display:flex;flex-direction:column;gap:.7rem}
+.modal-btns button{padding:.9rem;border:none;border-radius:8px;font-weight:700;font-size:.97rem;cursor:pointer;font-family:inherit}
+.modal-cancel{margin-top:.8rem;background:none;border:none;color:var(--gray);font-size:.85rem;cursor:pointer;font-family:inherit}
+/* CLIENT AREA */
+.client-area{min-height:100vh;background:var(--light)}
+.auth-wrap{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:2rem}
+.auth-box{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.07);width:100%;max-width:420px}
+.auth-tab-btn{flex:1;padding:1rem;text-align:center;cursor:pointer;font-weight:600;font-size:.88rem;background:var(--light);color:var(--gray);border-bottom:2px solid var(--border);transition:all.2s;font-family:inherit;border:none;border-radius:0}
+.auth-tab-btn.active{background:#fff;color:var(--navy);border-bottom:2px solid var(--navy)}
+.auth-form-inner{padding:2rem}
+.auth-note{text-align:center;font-size:.8rem;color:var(--gray);margin-top:1rem}
+/* DASHBOARD */
+.dashboard{display:none;padding:2rem;max-width:1100px;margin:0 auto}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.dash-header h2{font-size:1.5rem;font-weight:700;color:var(--navy)}
+.dash-header-sub{font-size:.88rem;color:var(--gray);margin-top:.2rem}
+.logout-btn{background:var(--light);border:1px solid var(--border);color:var(--gray);padding:.5rem 1rem;border-radius:8px;font-size:.85rem;cursor:pointer;font-family:inherit}
+.logout-btn:hover{background:var(--border)}
+/* DASH TABS */
+.dash-nav{display:flex;gap:.4rem;margin-bottom:1.5rem;flex-wrap:wrap;border-bottom:2px solid var(--border);padding-bottom:.5rem}
+.dash-nav-btn{padding:.5rem 1rem;border-radius:8px 8px 0 0;border:none;background:transparent;color:var(--gray);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all.2s}
+.dash-nav-btn.active{background:var(--navy);color:#fff}
+.dash-panel{display:none}.dash-panel.active{display:block}
+/* CARDS */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+.dash-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:1.2rem 1.5rem}
+.dash-card-label{font-size:.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem}
+.dash-card-val{font-size:1.5rem;font-weight:700;color:var(--navy)}
+.dash-card-sub{font-size:.75rem;color:var(--green);margin-top:.2rem;font-weight:600}
+/* SECTION BOX */
+.sbox{background:#fff;border-radius:12px;border:1px solid var(--border);margin-bottom:1.5rem;overflow:hidden}
+.sbox-head{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.sbox-head h3{font-size:1rem;font-weight:700;color:var(--navy)}
+.sbox-body{padding:1.5rem}
+/* BUTTONS */
+.btn-sm{padding:.45rem 1rem;border-radius:7px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:opacity.2s}
+.btn-sm:hover{opacity:.85}
+.btn-green{background:var(--green);color:#fff}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-red{background:rgba(230,0,40,.1);border:1px solid rgba(230,0,40,.3)!important;color:var(--red)!important}
+.btn-gray{background:var(--light);border:1px solid var(--border);color:var(--gray)}
+/* AVALIAÇÃO FÍSICA */
+.eval-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.8rem;margin-bottom:1.2rem}
+.eval-item label{font-size:.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:.3rem}
+.eval-item input{width:100%;padding:.55rem .8rem;border:1px solid var(--border);border-radius:7px;font-size:.9rem;font-family:inherit;outline:none;transition:border.2s;color:var(--text)}
+.eval-item input:focus{border-color:var(--blue)}
+.eval-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.8rem;margin-bottom:1rem}
+.eval-stat{background:var(--light);border-radius:10px;padding:1rem;text-align:center}
+.eval-stat-val{font-size:1.5rem;font-weight:800;color:var(--navy)}
+.eval-stat-unit{font-size:.75rem;color:var(--gray);margin-top:.1rem}
+.eval-stat-label{font-size:.75rem;color:var(--gray);margin-top:.2rem}
+/* FOTOS */
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.8rem;margin-bottom:1rem}
+.photo-thumb{border-radius:10px;overflow:hidden;aspect-ratio:3/4;background:var(--light);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--gray);cursor:pointer;transition:border.2s;position:relative}
+.photo-thumb:hover{border-color:var(--blue)}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-thumb .photo-label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:.7rem;padding:.3rem;text-align:center}
+.photo-upload-btn{border:2px dashed var(--border);background:transparent;color:var(--gray);font-size:2rem;cursor:pointer}
+/* PROGRESSO */
+.progress-row{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem}
+.progress-label{font-size:.83rem;color:var(--gray);width:110px;flex-shrink:0}
+.progress-bar-wrap{flex:1;background:var(--light);border-radius:20px;height:8px;overflow:hidden}
+.progress-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width.8s}
+.progress-val{font-size:.83rem;font-weight:700;color:var(--navy);width:55px;text-align:right;flex-shrink:0}
+/* PLANO TREINO */
+.workout-builder .day-block{background:var(--light);border-radius:10px;padding:1rem;margin-bottom:1rem}
+.workout-builder .day-title{font-weight:700;color:var(--navy);margin-bottom:.8rem;font-size:.95rem;display:flex;align-items:center;justify-content:space-between}
+.exercise-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:.5rem;align-items:center;margin-bottom:.5rem}
+.exercise-row input{padding:.5rem .7rem;border:1px solid var(--border);border-radius:7px;font-size:.83rem;font-family:inherit;outline:none;color:var(--text)}
+.exercise-row input:focus{border-color:var(--blue)}
+.ex-label{font-size:.72rem;color:var(--gray);text-align:center;margin-bottom:.2rem}
+/* CLIENT VIEW WORKOUT */
+.workout-view .day-block{margin-bottom:1.5rem}
+.workout-view .day-title{font-weight:700;color:var(--navy);font-size:1rem;margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)}
+.ex-card{background:var(--light);border-radius:10px;padding:.8rem 1rem;margin-bottom:.5rem;display:flex;align-items:center;gap:1rem}
+.ex-num{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ex-info{flex:1}
+.ex-name{font-weight:600;color:var(--text);font-size:.9rem}
+.ex-meta{font-size:.78rem;color:var(--gray);margin-top:.2rem}
+.ex-done{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all.2s;flex-shrink:0;background:transparent}
+.ex-done.done{background:var(--green);border-color:var(--green);color:#fff}
+/* NUTRIÇÃO */
+.meal-card{background:var(--light);border-radius:10px;padding:1rem;margin-bottom:.8rem}
+.meal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.meal-title{font-weight:700;color:var(--navy);font-size:.93rem}
+.meal-cals{font-size:.78rem;color:var(--green);font-weight:600}
+.food-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;font-size:.85rem;color:var(--gray)}
+.food-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.nutrition-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.2rem}
+.nut-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.8rem;text-align:center}
+.nut-val{font-size:1.3rem;font-weight:800;color:var(--navy)}
+.nut-label{font-size:.72rem;color:var(--gray);margin-top:.2rem}
+/* MENSAGENS */
+.msgs{display:flex;flex-direction:column;gap:.4rem;max-height:220px;overflow-y:auto;margin-bottom:1rem;padding-right:.3rem}
+.msg-bubble{padding:.7rem 1rem;border-radius:10px;font-size:.87rem;max-width:78%;line-height:1.5}
+.msg-trainer{background:var(--light);color:var(--text);align-self:flex-start}
+.msg-me{background:var(--navy);color:#fff;align-self:flex-end}
+.msg-input-row{display:flex;gap:.5rem}
+.msg-input-row input{flex:1;padding:.65rem 1rem;border:1px solid var(--border);border-radius:8px;font-size:.9rem;font-family:inherit;outline:none}
+.msg-input-row input:focus{border-color:var(--blue)}
+/* ADMIN CLIENT LIST */
+.client-list-item{display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border);cursor:pointer}
+.client-list-item:last-child{border:none}
+.client-list-item:hover{opacity:.8}
+.c-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--navy));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.95rem;flex-shrink:0}
+.c-info h4{font-size:.9rem;font-weight:700;color:var(--navy)}
+.c-info p{font-size:.75rem;color:var(--gray);margin-top:.1rem}
+.c-badge{margin-left:auto;padding:.22rem .7rem;border-radius:20px;font-size:.72rem;font-weight:700;flex-shrink:0}
+.badge-active{background:rgba(90,158,26,.12);color:var(--green)}
+.badge-pending{background:rgba(230,0,40,.1);color:var(--red)}
+/* ADMIN TABS */
+.admin-filter{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.af-btn{padding:.4rem 1rem;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--gray);font-size:.82rem;cursor:pointer;font-weight:600;font-family:inherit;transition:all.2s}
+.af-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+/* MISC */
+.hidden{display:none!important}
+.chip{display:inline-block;padding:.2rem .7rem;border-radius:20px;font-size:.75rem;font-weight:600}
+.chip-green{background:rgba(90,158,26,.1);color:var(--green)}
+.chip-blue{background:rgba(30,110,181,.1);color:var(--blue)}
+.divider-line{border:none;border-top:1px solid var(--border);margin:1rem 0}
+footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:2rem;font-size:.83rem}
+footer span{color:var(--green)}
+@media(max-width:768px){
+  .hero h1{font-size:2rem}.contact-grid{grid-template-columns:1fr}.calc-row{grid-template-columns:1fr}
+  .sobre-inner{flex-direction:column;text-align:center}.sobre-tags{justify-content:center}.nav-links{display:none}
+  .exercise-row{grid-template-columns:1fr 1fr;gap:.4rem}.nutrition-summary{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('main')">RS<span>Performance</span></div>
+    <ul class="nav-links">
+      <li><a onclick="goTo('sobre')">Sobre</a></li>
+      <li><a onclick="goTo('planos')">Planos</a></li>
+      <li><a onclick="goTo('calculadora')">Plano Conjunto</a></li>
+      <li><a onclick="showPage('cliente')">Área de Cliente</a></li>
+      <li><a onclick="goTo('contacto')">Contacto</a></li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('cliente')">Área de Cliente</button>
+  </div>
+</nav>
+
+<!-- ===== MAIN PAGE ===== -->
+<div id="page-main" class="page active">
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">🏋️ Fitness for Everyone</div>
+    <h1>Mais energia.<br><span>Menos peso.</span></h1>
+    <p>Personal Trainer online e presencial em Lisboa. Treinos personalizados para quem quer resultados reais.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="goTo('planos')">Ver Planos e Preços</button>
+      <button class="btn-outline" onclick="goTo('contacto')">Falar com o Rodrigo</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">100+</div><div class="stat-l">Alunos Acompanhados</div></div>
+      <div class="stat"><div class="stat-n">Online</div><div class="stat-l">& Presencial</div></div>
+      <div class="stat"><div class="stat-n">Lisboa</div><div class="stat-l">e Zona</div></div>
+    </div>
+  </div>
+</section>
+<section class="sobre" id="sobre">
+  <div class="container">
+    <div class="sobre-inner">
+      <img src="https://i.imgur.com/hHa3Qgz.jpeg" alt="Rodrigo Santos" class="sobre-avatar">
+      <div class="sobre-text">
+        <h2>Olá, sou o Rodrigo 👋</h2>
+        <p>Personal Trainer online e presencial na zona de Lisboa, especializado em ajudar pessoas que se sentem sem energia e querem perder peso — de forma real, sustentável e adaptada à tua vida.</p>
+        <p>Com experiência em educação física infantil e como treinador de guarda-redes, sei que cada pessoa é diferente e merece um acompanhamento único.</p>
+        <div class="sobre-tags">
+          <span class="tag">⚡ Mais Energia</span><span class="tag">🏃 Perda de Peso</span>
+          <span class="tag">📍 Lisboa</span><span class="tag">📱 Treino Online</span>
+          <span class="tag">👶 Experiência Infantil</span><span class="tag">🥅 Treinador de GR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="planos">
+  <div class="container">
+    <h2 class="section-title">Planos & Preços</h2><div class="divider"></div>
+    <p class="section-sub">Escolhe o plano que melhor se adapta a ti.</p>
+    <div class="tabs">
+      <button class="tab active" onclick="showPlans('online',this)">🌐 Online</button>
+      <button class="tab" onclick="showPlans('presencial',this)">📍 Presencial</button>
+    </div>
+    <div id="plans-online" class="plans-grid">
+      <div class="plan-card"><div class="plan-icon">⚡</div><div class="plan-name">Mensal</div><div class="plan-duration">Online · 1 mês</div><div class="plan-price"><sup>€</sup>100<sub>/mês</sub></div><div class="plan-savings">&nbsp;</div><ul class="plan-features"><li>Plano de treino personalizado</li><li>Acompanhamento por mensagem</li><li>Ajustes semanais</li><li>Acesso à área de cliente</li></ul><button class="plan-btn" onclick="openModal('Online Mensal','100','STRIPE_OM')">Comprar Plano</button></div>
+      <div class="plan-card popular"><div class="popular-badge">⭐ Mais Popular</div><div class="plan-icon">🔥</div><div class="plan-name">Trimestral</div><div class="plan-duration">Online · 3 meses</div><div class="plan-price"><sup>€</sup>240<sub>/trimestre</sub></div><div class="plan-savings">Poupa 60€</div><ul class="plan-features"><li>Plano de treino personalizado</li><li>Acompanhamento prioritário</li><li>Ajustes semanais</li><li>Acesso à área de cliente</li><li>Avaliação mensal</li></ul><button class="plan-btn" onclick="openModal('Online Trimestral','240','STRIPE_OT')">Comprar Plano</button></div>
+      <div class="plan-card"><div class="plan-icon">🏆</div><div class="plan-name">Semestral</div><div class="plan-duration">Online · 6 meses</div><div class="plan-price"><sup>€</sup>500<sub>/semestre</sub></div><div class="plan-savings">Poupa 100€</div><ul class="plan-features"><li>Plano de treino personalizado</li><li>Acompanhamento prioritário</li><li>Ajustes semanais</li><li>Acesso à área de cliente</li><li>Avaliação mensal</li><li>Plano nutricional incluído</li></ul><button class="plan-btn" onclick="openModal('Online Semestral','500','STRIPE_OS')">Comprar Plano</button></div>
+    </div>
+    <div id="plans-presencial" class="plans-grid hidden">
+      <div class="plan-card"><div class="plan-icon">⚡</div><div class="plan-name">Mensal</div><div class="plan-duration">Presencial · 1 mês</div><div class="plan-price"><sup>€</sup>120<sub>/mês</sub></div><div class="plan-savings">&nbsp;</div><ul class="plan-features"><li>Sessões presenciais em Lisboa</li><li>Plano de treino incluído</li><li>Acompanhamento por mensagem</li><li>Acesso à área de cliente</li></ul><button class="plan-btn" onclick="openModal('Presencial Mensal','120','STRIPE_PM')">Comprar Plano</button></div>
+      <div class="plan-card popular"><div class="popular-badge">⭐ Mais Popular</div><div class="plan-icon">🔥</div><div class="plan-name">Trimestral</div><div class="plan-duration">Presencial · 3 meses</div><div class="plan-price"><sup>€</sup>300<sub>/trimestre</sub></div><div class="plan-savings">Poupa 60€</div><ul class="plan-features"><li>Sessões presenciais em Lisboa</li><li>Plano de treino incluído</li><li>Acompanhamento prioritário</li><li>Acesso à área de cliente</li><li>Avaliação mensal</li></ul><button class="plan-btn" onclick="openModal('Presencial Trimestral','300','STRIPE_PT')">Comprar Plano</button></div>
+      <div class="plan-card"><div class="plan-icon">🏆</div><div class="plan-name">Semestral</div><div class="plan-duration">Presencial · 6 meses</div><div class="plan-price"><sup>€</sup>650<sub>/semestre</sub></div><div class="plan-savings">Poupa 70€</div><ul class="plan-features"><li>Sessões presenciais em Lisboa</li><li>Plano de treino incluído</li><li>Acompanhamento prioritário</li><li>Acesso à área de cliente</li><li>Avaliação mensal</li><li>Plano nutricional incluído</li></ul><button class="plan-btn" onclick="openModal('Presencial Semestral','650','STRIPE_PS')">Comprar Plano</button></div>
+    </div>
+    <div class="mbway-banner"><span style="font-size:1.5rem">📱</span><p><strong>Preferes pagar por MB Way?</strong><br>Envia o comprovativo para o WhatsApp e o teu plano é ativado em minutos.</p><button class="mbway-btn" onclick="window.open('https://wa.me/351935723352?text=Olá Rodrigo, quero pagar por MB Way: ','_blank')">Pagar por MB Way</button></div>
+  </div>
+</section>
+<section class="calc-section" id="calculadora">
+  <div class="container">
+    <h2 class="section-title">Plano Conjunto</h2><div class="divider"></div>
+    <p class="section-sub">Online + Presencial — calcula o teu preço</p>
+    <div class="calc-box">
+      <div class="calc-row">
+        <div><span class="calc-label">Duração</span><select class="calc-select" id="calc-dur" onchange="calcPrice()"><option value="mensal">Mensal</option><option value="trimestral">Trimestral</option><option value="semestral">Semestral</option></select></div>
+        <div><span class="calc-label">Sessões presenciais</span><select class="calc-select" id="calc-sess" onchange="calcPrice()"><option value="1m">1× por mês</option><option value="1s">1× por semana</option><option value="2s">2× por semana</option><option value="3s">3× por semana</option><option value="4s">4× por semana</option></select></div>
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">Valor total do plano conjunto</div>
+        <div class="calc-result-price" id="calc-total">—</div>
+        <div class="calc-result-detail" id="calc-detail"></div>
+        <div class="calc-breakdown">
+          <div class="calc-item"><div class="calc-item-val" id="b-online">—</div><div class="calc-item-lbl">Online</div></div>
+          <div class="calc-item"><div class="calc-item-val" style="color:rgba(255,255,255,.3)">+</div><div class="calc-item-lbl">&nbsp;</div></div>
+          <div class="calc-item"><div class="calc-item-val" id="b-sess">—</div><div class="calc-item-lbl">Sessões</div></div>
+          <div class="calc-item"><div class="calc-item-val" style="color:rgba(255,255,255,.3)">=</div><div class="calc-item-lbl">&nbsp;</div></div>
+          <div class="calc-item"><div class="calc-item-val" id="b-total">—</div><div class="calc-item-lbl">Total</div></div>
+        </div>
+      </div>
+      <div class="calc-btns">
+        <button class="cpay" style="background:var(--green);color:#fff" onclick="conjStripe()">💳 Pagar com Cartão</button>
+        <button class="cpay" style="background:var(--red);color:#fff" onclick="conjMBWay()">📱 Pagar por MB Way</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contacto">
+  <div class="container">
+    <h2 class="section-title">Contacto</h2><div class="divider"></div>
+    <p class="section-sub">Tem dúvidas? Fala comigo!</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Vamos conversar 💬</h3>
+        <p>Não tens a certeza qual o plano ideal? Fala comigo sem compromisso.</p>
+        <div class="contact-item"><div class="contact-icon">📍</div><span>Lisboa e zona de Lisboa</span></div>
+        <div class="contact-item"><div class="contact-icon">📱</div><span>+351 935 723 352</span></div>
+        <div class="contact-item"><div class="contact-icon">✉️</div><span>rs.performance.life@gmail.com</span></div>
+        <button class="wa-btn" onclick="window.open('https://wa.me/351935723352?text=Olá Rodrigo!','_blank')">💬 Falar no WhatsApp</button>
+      </div>
+      <div class="cfbox">
+        <div class="fg"><label>Nome</label><input type="text" id="cf-nome" placeholder="O teu nome"></div>
+        <div class="fg"><label>Email</label><input type="email" id="cf-email" placeholder="o.teu@email.com"></div>
+        <div class="fg"><label>Mensagem</label><textarea id="cf-msg" rows="4" placeholder="Conta-me os teus objetivos..."></textarea></div>
+        <button class="fsub" onclick="enviarMsg()">Enviar Mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+<footer><p>© 2025 <span>RS Performance</span> · Fitness for Everyone · Lisboa · +351 935 723 352</p></footer>
+</div><!-- end main -->
+
+<!-- ===== ÁREA DE CLIENTE ===== -->
+<div id="page-cliente" class="page">
+<div class="client-area">
+  <!-- AUTH -->
+  <div id="auth-screen" class="auth-wrap">
+    <div class="auth-box">
+      <div style="background:var(--navy);padding:1.5rem;text-align:center">
+        <div style="color:#fff;font-size:1.2rem;font-weight:800">RS<span style="color:#5a9e1a">Performance</span></div>
+        <div style="color:rgba(255,255,255,.55);font-size:.8rem;margin-top:.3rem">Área de Cliente</div>
+      </div>
+      <div style="display:flex">
+        <button class="auth-tab-btn active" id="tab-login" onclick="switchAuth('login')">Entrar</button>
+        <button class="auth-tab-btn" id="tab-reg" onclick="switchAuth('register')">Registar</button>
+      </div>
+      <div class="auth-form-inner">
+        <div id="lf">
+          <div class="fg"><label>Email</label><input type="email" id="login-email" placeholder="o.teu@email.com"></div>
+          <div class="fg"><label>Password</label><input type="password" id="login-pw" placeholder="••••••••"></div>
+          <button class="fsub" onclick="doLogin()">Entrar</button>
+          <p class="auth-note">Esqueceste a password? <a href="#" style="color:var(--blue)">Recuperar</a></p>
+        </div>
+        <div id="rf" style="display:none">
+          <div class="fg"><label>Nome</label><input type="text" id="reg-nome" placeholder="O teu nome"></div>
+          <div class="fg"><label>Email</label><input type="email" id="reg-email" placeholder="o.teu@email.com"></div>
+          <div class="fg"><label>Password</label><input type="password" id="reg-pw" placeholder="••••••••"></div>
+          <button class="fsub" onclick="doRegister()">Criar conta</button>
+          <p class="auth-note">O Rodrigo ativa o teu plano após o registo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENT DASHBOARD -->
+  <div id="client-dashboard" class="dashboard">
+    <div class="dash-header">
+      <div><h2 id="dash-title">Olá! 👋</h2><div class="dash-header-sub" id="dash-sub"></div></div>
+      <button class="logout-btn" onclick="doLogout()">Sair →</button>
+    </div>
+    <div class="dash-nav">
+      <button class="dash-nav-btn active" onclick="switchDashPanel('overview',this)">🏠 Início</button>
+      <button class="dash-nav-btn" onclick="switchDashPanel('treino',this)">💪 Treino</button>
+      <button class="dash-nav-btn" onclick="switchDashPanel('avaliacao',this)">📏 Avaliação</button>
+      <button class="dash-nav-btn" onclick="switchDashPanel('nutricao',this)">🥗 Nutrição</button>
+      <button class="dash-nav-btn" onclick="switchDashPanel('mensagens',this)">💬 Mensagens</button>
+    </div>
+    <!-- OVERVIEW -->
+    <div class="dash-panel active" id="panel-overview">
+      <div class="dash-grid" id="dc-grid"></div>
+      <div class="sbox"><div class="sbox-head"><h3>📅 Próximos Eventos</h3></div><div class="sbox-body" id="dc-events"></div></div>
+      <div class="sbox"><div class="sbox-head"><h3>📊 Progresso Rápido</h3></div><div class="sbox-body" id="dc-progress"></div></div>
+    </div>
+    <!-- TREINO -->
+    <div class="dash-panel" id="panel-treino">
+      <div class="sbox">
+        <div class="sbox-head"><h3>💪 O Meu Plano de Treino</h3><span id="workout-chip"></span></div>
+        <div class="sbox-body workout-view" id="workout-view"></div>
+      </div>
+    </div>
+    <!-- AVALIAÇÃO -->
+    <div class="dash-panel" id="panel-avaliacao">
+      <div class="sbox">
+        <div class="sbox-head"><h3>📏 A Minha Avaliação Física</h3></div>
+        <div class="sbox-body">
+          <div class="eval-stat-grid" id="eval-stats-client"></div>
+          <hr class="divider-line">
+          <h4 style="color:var(--navy);margin-bottom:1rem;font-size:.95rem">📸 Fotografias de Progresso</h4>
+          <div class="photo-grid" id="photo-grid-client"></div>
+          <hr class="divider-line">
+          <h4 style="color:var(--navy);margin-bottom:.8rem;font-size:.95rem">📈 Evolução de Medidas</h4>
+          <div id="eval-history-client"></div>
+        </div>
+      </div>
+    </div>
+    <!-- NUTRIÇÃO -->
+    <div class="dash-panel" id="panel-nutricao">
+      <div class="sbox">
+        <div class="sbox-head"><h3>🥗 Diário Alimentar</h3><button class="btn-sm btn-green" onclick="showAddMealForm()">+ Adicionar Refeição</button></div>
+        <div class="sbox-body">
+          <div class="nutrition-summary" id="nut-summary"></div>
+          <div id="add-meal-form" style="display:none;background:var(--light);border-radius:10px;padding:1rem;margin-bottom:1rem">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.7rem">
+              <div class="fg" style="margin:0"><label>Refeição</label><select id="meal-type"><option>Pequeno-almoço</option><option>Lanche Manhã</option><option>Almoço</option><option>Lanche Tarde</option><option>Jantar</option><option>Ceia</option></select></div>
+              <div class="fg" style="margin:0"><label>Hora</label><input type="time" id="meal-time"></div>
+            </div>
+            <div class="fg" style="margin:0 0 .7rem"><label>Alimentos (um por linha, ex: "Frango 150g - 165kcal")</label><textarea id="meal-foods" rows="3" placeholder="Frango grelhado 150g&#10;Arroz integral 100g&#10;Salada mista"></textarea></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.5rem;margin-bottom:.7rem">
+              <div class="fg" style="margin:0"><label>Kcal</label><input type="number" id="meal-kcal" placeholder="0"></div>
+              <div class="fg" style="margin:0"><label>Prot (g)</label><input type="number" id="meal-prot" placeholder="0"></div>
+              <div class="fg" style="margin:0"><label>Hid (g)</label><input type="number" id="meal-hid" placeholder="0"></div>
+              <div class="fg" style="margin:0"><label>Gord (g)</label><input type="number" id="meal-gord" placeholder="0"></div>
+            </div>
+            <div style="display:flex;gap:.5rem">
+              <button class="btn-sm btn-green" onclick="addMeal()">Guardar Refeição</button>
+              <button class="btn-sm btn-gray" onclick="document.getElementById('add-meal-form').style.display='none'">Cancelar</button>
+            </div>
+          </div>
+          <div id="meals-list"></div>
+        </div>
+      </div>
+    </div>
+    <!-- MENSAGENS -->
+    <div class="dash-panel" id="panel-mensagens">
+      <div class="sbox">
+        <div class="sbox-head"><h3>💬 Mensagens com o Rodrigo</h3></div>
+        <div class="sbox-body">
+          <div class="msgs" id="msgs-client"></div>
+          <div class="msg-input-row"><input type="text" id="msg-client-input" placeholder="Escreve uma mensagem..."><button class="btn-sm btn-navy" onclick="sendClientMsg()">Enviar</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div id="admin-dashboard" class="dashboard">
+    <div class="dash-header">
+      <div><h2>Painel RS Performance 💪</h2><div class="dash-header-sub">Bem-vindo, Rodrigo</div></div>
+      <button class="logout-btn" onclick="doLogout()">Sair →</button>
+    </div>
+    <div class="dash-nav">
+      <button class="dash-nav-btn active" onclick="switchAdminPanel('clientes',this)">👥 Clientes</button>
+      <button class="dash-nav-btn" onclick="switchAdminPanel('ficha',this)">📋 Ficha do Aluno</button>
+      <button class="dash-nav-btn" onclick="switchAdminPanel('treino-admin',this)">💪 Plano de Treino</button>
+      <button class="dash-nav-btn" onclick="switchAdminPanel('avaliacao-admin',this)">📏 Avaliação Física</button>
+      <button class="dash-nav-btn" onclick="switchAdminPanel('msgs-admin',this)">💬 Mensagens</button>
+    </div>
+    <!-- CLIENTES -->
+    <div class="dash-panel active" id="panel-clientes">
+      <div class="dash-grid">
+        <div class="dash-card"><div class="dash-card-label">Clientes Ativos</div><div class="dash-card-val" id="admin-stat-ativos">0</div><div class="dash-card-sub">total</div></div>
+        <div class="dash-card"><div class="dash-card-label">Novos este mês</div><div class="dash-card-val" id="admin-stat-novos">0</div><div class="dash-card-sub">registos</div></div>
+        <div class="dash-card"><div class="dash-card-label">Pendentes</div><div class="dash-card-val" id="admin-stat-pend">0</div><div class="dash-card-sub">a ativar</div></div>
+      </div>
+      <div class="sbox">
+        <div class="sbox-head"><h3>👥 Lista de Clientes</h3><button class="btn-sm btn-green" onclick="addClientPrompt()">+ Adicionar</button></div>
+        <div class="sbox-body">
+          <div class="admin-filter">
+            <button class="af-btn active" onclick="filterClients('todos',this)">Todos</button>
+            <button class="af-btn" onclick="filterClients('online',this)">Online</button>
+            <button class="af-btn" onclick="filterClients('presencial',this)">Presencial</button>
+          </div>
+          <div id="client-list"></div>
+        </div>
+      </div>
+    </div>
+    <!-- FICHA -->
+    <div class="dash-panel" id="panel-ficha">
+      <div id="no-client-sel" style="text-align:center;padding:3rem;color:var(--gray)">← Seleciona um cliente na aba "Clientes"</div>
+      <div id="ficha-content" style="display:none">
+        <div class="sbox">
+          <div class="sbox-head"><h3 id="ficha-title">Ficha</h3><div style="display:flex;gap:.5rem"><button class="btn-sm btn-green" onclick="saveBasicInfo()">💾 Guardar</button></div></div>
+          <div class="sbox-body">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem">
+              <div class="fg" style="margin:0"><label>Plano Ativo</label><select id="f-plano"><option>Online Mensal</option><option>Online Trimestral</option><option>Online Semestral</option><option>Presencial Mensal</option><option>Presencial Trimestral</option><option>Presencial Semestral</option><option>Conjunto Personalizado</option><option>Aguarda ativação</option></select></div>
+              <div class="fg" style="margin:0"><label>Objetivo</label><input type="text" id="f-obj" placeholder="ex: Perda de peso"></div>
+              <div class="fg" style="margin:0"><label>Próxima Sessão</label><input type="datetime-local" id="f-sess"></div>
+              <div class="fg" style="margin:0"><label>Treinos este mês</label><input type="number" id="f-treinos" placeholder="0"></div>
+              <div class="fg" style="margin:0"><label>Tipo</label><select id="f-type"><option value="online">Online</option><option value="presencial">Presencial</option></select></div>
+            </div>
+            <div class="fg" style="margin-top:.8rem"><label>Notas internas</label><textarea id="f-notas" rows="3" placeholder="Notas sobre o aluno..."></textarea></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PLANO DE TREINO ADMIN -->
+    <div class="dash-panel" id="panel-treino-admin">
+      <div id="no-client-sel2" style="text-align:center;padding:3rem;color:var(--gray)">← Seleciona um cliente na aba "Clientes"</div>
+      <div id="treino-admin-content" style="display:none">
+        <div class="sbox">
+          <div class="sbox-head"><h3 id="treino-admin-title">Plano de Treino</h3><div style="display:flex;gap:.5rem"><button class="btn-sm btn-green" onclick="addDay()">+ Dia</button><button class="btn-sm btn-navy" onclick="saveWorkout()">💾 Guardar</button></div></div>
+          <div class="sbox-body workout-builder" id="workout-builder"></div>
+        </div>
+      </div>
+    </div>
+    <!-- AVALIAÇÃO FÍSICA ADMIN -->
+    <div class="dash-panel" id="panel-avaliacao-admin">
+      <div id="no-client-sel3" style="text-align:center;padding:3rem;color:var(--gray)">← Seleciona um cliente na aba "Clientes"</div>
+      <div id="avaliacao-admin-content" style="display:none">
+        <div class="sbox">
+          <div class="sbox-head"><h3 id="aval-admin-title">Avaliação Física</h3><button class="btn-sm btn-navy" onclick="saveEvaluation()">💾 Guardar Avaliação</button></div>
+          <div class="sbox-body">
+            <h4 style="color:var(--navy);margin-bottom:.8rem;font-size:.9rem">📐 Medidas Corporais</h4>
+            <div class="eval-grid">
+              <div class="eval-item"><label>Peso (kg)</label><input type="number" id="e-peso" placeholder="70.5" step="0.1"></div>
+              <div class="eval-item"><label>Altura (cm)</label><input type="number" id="e-altura" placeholder="175"></div>
+              <div class="eval-item"><label>IMC</label><input type="text" id="e-imc" placeholder="Auto" readonly style="background:var(--light)"></div>
+              <div class="eval-item"><label>% Gordura</label><input type="number" id="e-gordura" placeholder="20" step="0.1"></div>
+              <div class="eval-item"><label>Massa Muscular (%)</label><input type="number" id="e-musculo" placeholder="40" step="0.1"></div>
+              <div class="eval-item"><label>Peito (cm)</label><input type="number" id="e-peito" placeholder="95"></div>
+              <div class="eval-item"><label>Cintura (cm)</label><input type="number" id="e-cintura" placeholder="80"></div>
+              <div class="eval-item"><label>Anca (cm)</label><input type="number" id="e-anca" placeholder="95"></div>
+              <div class="eval-item"><label>Braço D (cm)</label><input type="number" id="e-braco" placeholder="32"></div>
+              <div class="eval-item"><label>Coxa D (cm)</label><input type="number" id="e-coxa" placeholder="55"></div>
+              <div class="eval-item"><label>Perna (cm)</label><input type="number" id="e-perna" placeholder="36"></div>
+              <div class="eval-item"><label>Data</label><input type="date" id="e-data"></div>
+            </div>
+            <div class="fg"><label>Observações</label><textarea id="e-obs" rows="2" placeholder="Postura, desequilíbrios, notas de saúde..."></textarea></div>
+            <hr class="divider-line">
+            <h4 style="color:var(--navy);margin-bottom:.8rem;font-size:.9rem">📸 Fotografias de Progresso</h4>
+            <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem">Cola aqui links de imagens (Imgur, Google Drive, etc.) para as fotos do aluno.</p>
+            <div id="admin-photo-list"></div>
+            <div style="display:flex;gap:.5rem;margin-top:.5rem">
+              <input type="text" id="photo-url-input" class="fg" style="flex:1;margin:0;padding:.6rem 1rem;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.88rem" placeholder="URL da foto (ex: https://i.imgur.com/xxx.jpg)">
+              <select id="photo-cat" style="padding:.6rem;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.85rem;background:#fff">
+                <option value="inicial">Inicial</option><option value="progresso">Progresso</option><option value="atual">Atual</option>
+              </select>
+              <button class="btn-sm btn-green" onclick="addPhoto()">+ Foto</button>
+            </div>
+            <hr class="divider-line">
+            <h4 style="color:var(--navy);margin-bottom:.8rem;font-size:.9rem">📈 Histórico de Avaliações</h4>
+            <div id="eval-history-admin"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MENSAGENS ADMIN -->
+    <div class="dash-panel" id="panel-msgs-admin">
+      <div id="no-client-sel4" style="text-align:center;padding:3rem;color:var(--gray)">← Seleciona um cliente na aba "Clientes"</div>
+      <div id="msgs-admin-content" style="display:none">
+        <div class="sbox">
+          <div class="sbox-head"><h3 id="msgs-admin-title">Mensagens</h3></div>
+          <div class="sbox-body">
+            <div class="msgs" id="msgs-admin-list"></div>
+            <div class="msg-input-row"><input type="text" id="msg-admin-input" placeholder="Mensagem para o aluno..."><button class="btn-sm btn-navy" onclick="sendAdminMsg()">Enviar</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- end cliente page -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="pay-modal">
+  <div class="modal-box">
+    <div style="font-size:2rem">💳</div>
+    <h3 id="modal-plan-name">Plano</h3>
+    <p id="modal-plan-price"></p>
+    <div class="modal-btns">
+      <button style="background:var(--navy);color:#fff" onclick="payStripe()">💳 Pagar com Cartão (Stripe)</button>
+      <button style="background:var(--red);color:#fff" onclick="payMBWay()">📱 Pagar por MB Way</button>
+    </div>
+    <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const ADMIN_ACC={email:'rs.performance.life@gmail.com',pw:'admin123',name:'Rodrigo'};
+let clients=[];
+let selClientId=null;
+let currentUser=null;
+let currentModalPlan='',currentModalPrice='',currentModalLink='';
+let conjTotal=0,conjDur='',conjSessTotal=0;
+const onlineP={mensal:100,trimestral:240,semestral:500};
+const meses={mensal:1,trimestral:3,semestral:6};
+
+// ===== NAVIGATION =====
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');window.scrollTo(0,0)}
+function goTo(id){showPage('main');setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'}),50)}
+
+// ===== MAIN SITE =====
+function showPlans(type,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById('plans-online').classList.toggle('hidden',type!=='online');document.getElementById('plans-presencial').classList.toggle('hidden',type!=='presencial')}
+function calcPrice(){
+  const dur=document.getElementById('calc-dur').value,sess=document.getElementById('calc-sess').value;
+  const online=onlineP[dur],m=meses[dur];
+  const ts=sess==='1m'?m:Math.round(m*4.33*parseInt(sess));
+  const pres=ts*25,total=online+pres;
+  conjTotal=total;conjDur=dur;conjSessTotal=ts;
+  document.getElementById('calc-total').textContent=total+'€';
+  document.getElementById('b-online').textContent=online+'€';
+  document.getElementById('b-sess').textContent=pres+'€ ('+ts+')';
+  document.getElementById('b-total').textContent=total+'€';
+  document.getElementById('calc-detail').textContent='Plano '+dur+' · '+ts+' sessões · 25€/sessão';
+}
+function conjStripe(){alert('Contacta o Rodrigo para personalizar o pagamento.');window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá! Plano Conjunto '+conjDur+' '+conjSessTotal+' sessões. Total: '+conjTotal+'€'),'_blank')}
+function conjMBWay(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Olá! Quero pagar por MB Way Plano Conjunto '+conjDur+' '+conjSessTotal+' sessões. Total: '+conjTotal+'€. MB Way: '),'_blank')}
+function openModal(plan,price,link){currentModalPlan=plan;currentModalPrice=price;currentModalLink=link;document.getElementById('modal-plan-name').textContent='Plano '+plan;document.getElementById('modal-plan-price').textContent=price+'€ — como queres pagar?';document.getElementById('pay-modal').classList.add('open')}
+function closeModal(){document.getElementById('pay-modal').classList.remove('open')}
+function payStripe(){if(currentModalLink.startsWith('STRIPE')){alert('⚠️ Insere o link Stripe.');return}window.open(currentModalLink,'_blank');closeModal()}
+function payMBWay(){window.open('https://wa.me/351935723352?text='+encodeURIComponent('Quero pagar por MB Way: '+currentModalPlan+' ('+currentModalPrice+'€). MB Way: '),'_blank');closeModal()}
+document.getElementById('pay-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+function enviarMsg(){const n=document.getElementById('cf-nome').value,e=document.getElementById('cf-email').value,m=document.getElementById('cf-msg').value;if(!n||!e||!m){alert('Preenche todos os campos.');return}window.open('https://wa.me/351935723352?text='+encodeURIComponent('Nome: '+n+'\nEmail: '+e+'\nMensagem: '+m),'_blank')}
+
+// ===== AUTH =====
+function switchAuth(t){document.getElementById('lf').style.display=t==='login'?'block':'none';document.getElementById('rf').style.display=t==='register'?'block':'none';document.getElementById('tab-login').classList.toggle('active',t==='login');document.getElementById('tab-reg').classList.toggle('active',t==='register')}
+function doLogin(){
+  const e=document.getElementById('login-email').value.trim().toLowerCase();
+  const p=document.getElementById('login-pw').value;
+  if(e===ADMIN_ACC.email.toLowerCase()&&p===ADMIN_ACC.pw){loginAs({role:'admin',name:ADMIN_ACC.name});return}
+  const c=clients.find(x=>x.email.toLowerCase()===e&&x.pw===p);
+  if(c){loginAs({role:'client',...c});return}
+  alert('Email ou password incorretos.');
+}
+function doRegister(){
+  const n=document.getElementById('reg-nome').value.trim(),e=document.getElementById('reg-email').value.trim().toLowerCase(),p=document.getElementById('reg-pw').value;
+  if(!n||!e||!p){alert('Preenche todos os campos.');return}
+  if(clients.find(x=>x.email.toLowerCase()===e)){alert('Email já registado.');return}
+  clients.push({id:Date.now(),name:n,email:e,pw:p,type:'online',plano:'Aguarda ativação',obj:'',sess:null,treinos:0,notas:'',workout:[],evaluation:[],photos:[],meals:[],msgs:[{from:'trainer',text:'Bem-vindo/a '+n+'! Recebi o teu registo. Vou preparar o teu plano em breve 🎉'}]});
+  alert('Registo feito! O Rodrigo ativa o teu plano em breve.');
+  switchAuth('login');
+}
+function loginAs(u){
+  currentUser=u;
+  document.getElementById('auth-screen').style.display='none';
+  if(u.role==='admin'){renderAdmin();}else{renderClientDash(u);}
+}
+function doLogout(){
+  currentUser=null;
+  document.getElementById('auth-screen').style.display='flex';
+  document.getElementById('client-dashboard').style.display='none';
+  document.getElementById('admin-dashboard').style.display='none';
+  document.getElementById('login-email').value='';document.getElementById('login-pw').value='';
+}
+
+// ===== DASH PANELS =====
+function switchDashPanel(name,btn){
+  document.querySelectorAll('#client-dashboard .dash-nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#client-dashboard .dash-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(name==='nutricao')renderMeals();
+  if(name==='mensagens')renderClientMsgs();
+  if(name==='avaliacao')renderClientEval();
+}
+function switchAdminPanel(name,btn){
+  document.querySelectorAll('#admin-dashboard .dash-nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#admin-dashboard .dash-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(name==='msgs-admin')renderAdminMsgs();
+  if(name==='avaliacao-admin')renderAdminEval();
+  if(name==='treino-admin')renderWorkoutBuilder();
+}
+
+// ===== CLIENT DASHBOARD =====
+function renderClientDash(u){
+  document.getElementById('client-dashboard').style.display='block';
+  document.getElementById('admin-dashboard').style.display='none';
+  document.getElementById('dash-title').textContent='Olá, '+u.name.split(' ')[0]+'! 👋';
+  document.getElementById('dash-sub').textContent=u.plano+' · '+u.obj;
+  // cards
+  const sd=u.sess?new Date(u.sess):null;
+  document.getElementById('dc-grid').innerHTML=`
+    <div class="dash-card"><div class="dash-card-label">Plano</div><div class="dash-card-val" style="font-size:1rem">${u.plano}</div><div class="dash-card-sub">ativo ✅</div></div>
+    <div class="dash-card"><div class="dash-card-label">Próxima Sessão</div><div class="dash-card-val">${sd?sd.toLocaleDateString('pt-PT',{day:'2-digit',month:'short'}):'—'}</div><div class="dash-card-sub">${sd?sd.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'}):''}</div></div>
+    <div class="dash-card"><div class="dash-card-label">Treinos Feitos</div><div class="dash-card-val">${u.treinos}</div><div class="dash-card-sub">este mês</div></div>
+    <div class="dash-card"><div class="dash-card-label">Objetivo</div><div class="dash-card-val" style="font-size:1rem">${u.obj||'—'}</div><div class="dash-card-sub">principal</div></div>`;
+  // events
+  const ev=document.getElementById('dc-events');
+  if(sd){ev.innerHTML=`<div class="event-item"><div class="event-dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0"></div><div><strong>${sd.toLocaleDateString('pt-PT',{weekday:'long',day:'2-digit',month:'long'})}</strong> às ${sd.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'})} — Sessão com Rodrigo</div></div>`;}
+  else{ev.innerHTML='<p style="color:var(--gray);font-size:.87rem">Nenhuma sessão marcada ainda.</p>';}
+  // progress
+  const ev2=document.getElementById('dc-progress');
+  const lastEval=u.evaluation&&u.evaluation.length?u.evaluation[u.evaluation.length-1]:null;
+  if(lastEval){
+    ev2.innerHTML=`<div class="progress-row"><div class="progress-label">Peso atual</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:70%"></div></div><div class="progress-val">${lastEval.peso}kg</div></div><div class="progress-row"><div class="progress-label">% Gordura</div><div class="progress-bar-wrap"><div class="progress-bar" style="width:${Math.min(100,(lastEval.gordura||0)/40*100)}%"></div></div><div class="progress-val">${lastEval.gordura||'—'}%</div></div>`;
+  } else {ev2.innerHTML='<p style="color:var(--gray);font-size:.87rem">Avaliação física ainda não realizada.</p>';}
+  // treino view
+  renderWorkoutView(u);
+}
+
+function renderWorkoutView(u){
+  const el=document.getElementById('workout-view');
+  const chip=document.getElementById('workout-chip');
+  if(!u.workout||!u.workout.length){el.innerHTML='<p style="color:var(--gray);font-size:.88rem">O teu plano de treino será preparado pelo Rodrigo em breve 💪</p>';chip.innerHTML='';return;}
+  chip.innerHTML='<span class="chip chip-green">'+u.workout.length+' dias</span>';
+  el.innerHTML='';
+  u.workout.forEach((day,di)=>{
+    const div=document.createElement('div');div.className='day-block';
+    let exHTML='';
+    (day.exercises||[]).forEach((ex,ei)=>{
+      exHTML+=`<div class="ex-card"><div class="ex-num">${ei+1}</div><div class="ex-info"><div class="ex-name">${ex.name}</div><div class="ex-meta">${ex.sets} séries × ${ex.reps} reps${ex.rest?' · Descanso: '+ex.rest:''}${ex.notes?' · '+ex.notes:''}</div></div><div class="ex-done" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':''" title="Marcar como feito"></div></div>`;
+    });
+    div.innerHTML=`<div class="workout-day-title">${day.title}</div>${exHTML}`;
+    el.appendChild(div);
+  });
+}
+
+// ===== CLIENT EVAL VIEW =====
+function renderClientEval(){
+  const u=currentUser;
+  const lastEval=u.evaluation&&u.evaluation.length?u.evaluation[u.evaluation.length-1]:null;
+  const sg=document.getElementById('eval-stats-client');
+  if(lastEval){
+    const imc=lastEval.imc||(lastEval.peso&&lastEval.altura?(lastEval.peso/((lastEval.altura/100)**2)).toFixed(1):'—');
+    sg.innerHTML=`
+      <div class="eval-stat"><div class="eval-stat-val">${lastEval.peso||'—'}</div><div class="eval-stat-unit">kg</div><div class="eval-stat-label">Peso</div></div>
+      <div class="eval-stat"><div class="eval-stat-val">${lastEval.altura||'—'}</div><div class="eval-stat-unit">cm</div><div class="eval-stat-label">Altura</div></div>
+      <div class="eval-stat"><div class="eval-stat-val">${imc}</div><div class="eval-stat-unit">IMC</div><div class="eval-stat-label">Índice</div></div>
+      <div class="eval-stat"><div class="eval-stat-val">${lastEval.gordura||'—'}</div><div class="eval-stat-unit">%</div><div class="eval-stat-label">Gordura</div></div>
+      <div class="eval-stat"><div class="eval-stat-val">${lastEval.musculo||'—'}</div><div class="eval-stat-unit">%</div><div class="eval-stat-label">Músculo</div></div>
+      <div class="eval-stat"><div class="eval-stat-val">${lastEval.cintura||'—'}</div><div class="eval-stat-unit">cm</div><div class="eval-stat-label">Cintura</div></div>`;
+  } else {sg.innerHTML='<p style="color:var(--gray);font-size:.87rem;grid-column:1/-1">Avaliação ainda não registada pelo Rodrigo.</p>';}
+  // photos
+  const pg=document.getElementById('photo-grid-client');
+  pg.innerHTML='';
+  (u.photos||[]).forEach(p=>{
+    pg.innerHTML+=`<div class="photo-thumb"><img src="${p.url}" alt="${p.cat}" onerror="this.parentNode.innerHTML='<span>📷</span>'"><div class="photo-label">${p.cat} · ${p.date||''}</div></div>`;
+  });
+  if(!u.photos||!u.photos.length)pg.innerHTML='<p style="color:var(--gray);font-size:.87rem">Sem fotografias ainda.</p>';
+  // history
+  const hist=document.getElementById('eval-history-client');
+  if(!u.evaluation||!u.evaluation.length){hist.innerHTML='<p style="color:var(--gray);font-size:.87rem">Sem histórico de avaliações.</p>';return;}
+  hist.innerHTML='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.83rem"><thead><tr style="background:var(--light)"><th style="padding:.5rem;text-align:left;color:var(--navy)">Data</th><th style="padding:.5rem;text-align:center;color:var(--navy)">Peso</th><th style="padding:.5rem;text-align:center;color:var(--navy)">Gordura</th><th style="padding:.5rem;text-align:center;color:var(--navy)">Cintura</th><th style="padding:.5rem;text-align:center;color:var(--navy)">IMC</th></tr></thead><tbody>'+u.evaluation.map(e=>`<tr style="border-bottom:1px solid var(--border)"><td style="padding:.5rem">${e.data||'—'}</td><td style="padding:.5rem;text-align:center">${e.peso||'—'}kg</td><td style="padding:.5rem;text-align:center">${e.gordura||'—'}%</td><td style="padding:.5rem;text-align:center">${e.cintura||'—'}cm</td><td style="padding:.5rem;text-align:center">${e.imc||'—'}</td></tr>`).join('')+'</tbody></table></div>';
+}
+
+// ===== NUTRITION =====
+function showAddMealForm(){document.getElementById('add-meal-form').style.display='block';document.getElementById('add-meal-form').scrollIntoView({behavior:'smooth'})}
+function addMeal(){
+  const u=currentUser;
+  const c=clients.find(x=>x.id===u.id);
+  const meal={id:Date.now(),type:document.getElementById('meal-type').value,time:document.getElementById('meal-time').value,foods:document.getElementById('meal-foods').value,kcal:parseInt(document.getElementById('meal-kcal').value)||0,prot:parseInt(document.getElementById('meal-prot').value)||0,hid:parseInt(document.getElementById('meal-hid').value)||0,gord:parseInt(document.getElementById('meal-gord').value)||0,date:new Date().toLocaleDateString('pt-PT')};
+  if(!meal.foods){alert('Adiciona pelo menos um alimento.');return}
+  if(c)c.meals=(c.meals||[]).concat([meal]);
+  currentUser.meals=(currentUser.meals||[]).concat([meal]);
+  document.getElementById('add-meal-form').style.display='none';
+  ['meal-foods','meal-kcal','meal-prot','meal-hid','meal-gord'].forEach(id=>document.getElementById(id).value='');
+  renderMeals();
+}
+function renderMeals(){
+  const u=currentUser;const meals=u.meals||[];
+  const totK=meals.reduce((a,m)=>a+m.kcal,0),totP=meals.reduce((a,m)=>a+m.prot,0),totH=meals.reduce((a,m)=>a+m.hid,0),totG=meals.reduce((a,m)=>a+m.gord,0);
+  document.getElementById('nut-summary').innerHTML=`<div class="nut-card"><div class="nut-val">${totK}</div><div class="nut-label">kcal</div></div><div class="nut-card"><div class="nut-val">${totP}g</div><div class="nut-label">Proteína</div></div><div class="nut-card"><div class="nut-val">${totH}g</div><div class="nut-label">Hidratos</div></div><div class="nut-card"><div class="nut-val">${totG}g</div><div class="nut-label">Gordura</div></div>`;
+  const ml=document.getElementById('meals-list');
+  if(!meals.length){ml.innerHTML='<p style="color:var(--gray);font-size:.87rem">Ainda não registaste refeições hoje.</p>';return}
+  ml.innerHTML=meals.map((m,i)=>`<div class="meal-card"><div class="meal-header"><div class="meal-title">🍽️ ${m.type} ${m.time?'· '+m.time:''}</div><div style="display:flex;align-items:center;gap:.5rem"><span class="meal-cals">${m.kcal} kcal</span><button onclick="deleteMeal(${i})" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:.85rem">✕</button></div></div>${m.foods.split('\n').filter(f=>f.trim()).map(f=>`<div class="food-row"><div class="food-dot"></div>${f}</div>`).join('')}<div style="display:flex;gap:.8rem;margin-top:.5rem;font-size:.75rem;color:var(--gray)"><span>P: ${m.prot}g</span><span>H: ${m.hid}g</span><span>G: ${m.gord}g</span></div></div>`).join('');
+}
+function deleteMeal(i){
+  const c=clients.find(x=>x.id===currentUser.id);
+  if(c)c.meals.splice(i,1);
+  currentUser.meals.splice(i,1);
+  renderMeals();
+}
+
+// ===== MESSAGES =====
+function renderClientMsgs(){
+  const u=currentUser;const list=document.getElementById('msgs-client');list.innerHTML='';
+  (u.msgs||[]).forEach(m=>{const div=document.createElement('div');div.className='msg-bubble '+(m.from==='trainer'?'msg-trainer':'msg-me');div.textContent=(m.from==='trainer'?'💬 Rodrigo: ':'')+m.text;list.appendChild(div);});
+  list.scrollTop=list.scrollHeight;
+}
+function sendClientMsg(){
+  const inp=document.getElementById('msg-client-input'),txt=inp.value.trim();if(!txt)return;
+  const c=clients.find(x=>x.id===currentUser.id);
+  const msg={from:'client',text:txt};
+  if(c)c.msgs.push(msg);currentUser.msgs.push(msg);
+  inp.value='';renderClientMsgs();
+}
+
+// ===== ADMIN =====
+function renderAdmin(){
+  document.getElementById('admin-dashboard').style.display='block';
+  document.getElementById('client-dashboard').style.display='none';
+  document.getElementById('admin-stat-ativos').textContent=clients.filter(c=>c.plano!=='Aguarda ativação').length;
+  document.getElementById('admin-stat-novos').textContent=clients.length;
+  document.getElementById('admin-stat-pend').textContent=clients.filter(c=>c.plano==='Aguarda ativação').length;
+  renderClientList('todos');
+}
+function renderClientList(type){
+  const list=document.getElementById('client-list');list.innerHTML='';
+  const filtered=type==='todos'?clients:clients.filter(c=>c.type===type);
+  if(!filtered.length){list.innerHTML='<p style="color:var(--gray);font-size:.87rem;padding:.5rem 0">Sem clientes.</p>';return}
+  filtered.forEach(c=>{
+    const div=document.createElement('div');div.className='client-list-item';
+    const init=c.name.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+    const active=c.plano!=='Aguarda ativação';
+    div.innerHTML=`<div class="c-avatar">${init}</div><div class="c-info"><h4>${c.name}</h4><p>${c.email} · ${c.plano}</p></div><span class="c-badge ${active?'badge-active':'badge-pending'}">${active?'Ativo':'Pendente'}</span><button onclick="deleteClient(${c.id},'${c.name}',event)" class="btn-sm btn-red" style="margin-left:.5rem;border:1px solid rgba(230,0,40,.3)">🗑️</button>`;
+    div.onclick=(e)=>{if(e.target.tagName==='BUTTON')return;selectClient(c.id)};
+    list.appendChild(div);
+  });
+}
+function filterClients(type,btn){document.querySelectorAll('.af-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderClientList(type)}
+function selectClient(id){
+  selClientId=id;const c=clients.find(x=>x.id===id);if(!c)return;
+  // show no-sel messages
+  ['no-client-sel','no-client-sel2','no-client-sel3','no-client-sel4'].forEach(el=>{const e=document.getElementById(el);if(e)e.style.display='none'});
+  ['ficha-content','treino-admin-content','avaliacao-admin-content','msgs-admin-content'].forEach(el=>{const e=document.getElementById(el);if(e)e.style.display='block'});
+  // ficha
+  document.getElementById('ficha-title').textContent='📋 Ficha de '+c.name;
+  document.getElementById('f-plano').value=c.plano;
+  document.getElementById('f-obj').value=c.obj||'';
+  document.getElementById('f-sess').value=c.sess||'';
+  document.getElementById('f-treinos').value=c.treinos||0;
+  document.getElementById('f-type').value=c.type||'online';
+  document.getElementById('f-notas').value=c.notas||'';
+  // treino title
+  document.getElementById('treino-admin-title').textContent='💪 Plano de Treino — '+c.name;
+  document.getElementById('aval-admin-title').textContent='📏 Avaliação — '+c.name;
+  document.getElementById('msgs-admin-title').textContent='💬 '+c.name;
+  // switch to ficha
+  switchAdminPanel('ficha',document.querySelectorAll('#admin-dashboard .dash-nav-btn')[1]);
+}
+function saveBasicInfo(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  c.plano=document.getElementById('f-plano').value;c.obj=document.getElementById('f-obj').value;
+  c.sess=document.getElementById('f-sess').value;c.treinos=parseInt(document.getElementById('f-treinos').value)||0;
+  c.type=document.getElementById('f-type').value;c.notas=document.getElementById('f-notas').value;
+  renderAdmin();alert('✅ Ficha de '+c.name+' guardada!');
+}
+function deleteClient(id,nome,e){
+  e.stopPropagation();if(!confirm('Apagar '+nome+'?'))return;
+  clients=clients.filter(c=>c.id!==id);
+  if(selClientId===id){selClientId=null;['ficha-content','treino-admin-content','avaliacao-admin-content','msgs-admin-content'].forEach(el=>{const e=document.getElementById(el);if(e)e.style.display='none'});['no-client-sel','no-client-sel2','no-client-sel3','no-client-sel4'].forEach(el=>{const e=document.getElementById(el);if(e)e.style.display='block'});}
+  renderAdmin();
+}
+function addClientPrompt(){
+  showAddClientModal();
+}
+function showAddClientModal(){
+  const existing=document.getElementById('add-client-modal');
+  if(existing)existing.remove();
+  const modal=document.createElement('div');
+  modal.id='add-client-modal';
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem';
+  modal.innerHTML=`<div style="background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:440px;box-shadow:0 8px 30px rgba(0,0,0,.15)">
+    <h3 style="color:var(--navy);margin-bottom:1.2rem;font-size:1.1rem">➕ Adicionar Novo Cliente</h3>
+    <div class="fg"><label>Nome completo</label><input type="text" id="nc-nome" placeholder="Nome do cliente"></div>
+    <div class="fg"><label>Email</label><input type="email" id="nc-email" placeholder="email@exemplo.com"></div>
+    <div class="fg"><label>Password temporária</label><input type="text" id="nc-pw" value="1234" placeholder="1234"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
+      <div class="fg" style="margin:0"><label>Tipo</label><select id="nc-type"><option value="online">Online</option><option value="presencial">Presencial</option></select></div>
+      <div class="fg" style="margin:0"><label>Plano</label><select id="nc-plano"><option>Online Mensal</option><option>Online Trimestral</option><option>Online Semestral</option><option>Presencial Mensal</option><option>Presencial Trimestral</option><option>Presencial Semestral</option><option>Aguarda ativação</option></select></div>
+    </div>
+    <div class="fg" style="margin-top:.7rem"><label>Objetivo</label><input type="text" id="nc-obj" placeholder="ex: Perda de peso"></div>
+    <div style="display:flex;gap:.7rem;margin-top:1rem">
+      <button class="btn-sm btn-green" style="flex:1;padding:.8rem" onclick="confirmAddClient()">✅ Adicionar Cliente</button>
+      <button class="btn-sm btn-gray" style="padding:.8rem 1.2rem" onclick="document.getElementById('add-client-modal').remove()">Cancelar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',function(e){if(e.target===this)this.remove()});
+  document.getElementById('nc-nome').focus();
+}
+function confirmAddClient(){
+  const nome=document.getElementById('nc-nome').value.trim();
+  const email=document.getElementById('nc-email').value.trim().toLowerCase();
+  const pw=document.getElementById('nc-pw').value.trim()||'1234';
+  const type=document.getElementById('nc-type').value;
+  const plano=document.getElementById('nc-plano').value;
+  const obj=document.getElementById('nc-obj').value.trim();
+  if(!nome||!email){alert('Nome e email são obrigatórios.');return}
+  if(clients.find(x=>x.email.toLowerCase()===email)){alert('Este email já existe.');return}
+  clients.push({id:Date.now(),name:nome,email:email,pw:pw,type:type,plano:plano,obj:obj,sess:null,treinos:0,notas:'',workout:[],evaluation:[],photos:[],meals:[],msgs:[{from:'trainer',text:'Bem-vindo/a '+nome+'! O teu plano vai ser preparado em breve 🎉'}]});
+  document.getElementById('add-client-modal').remove();
+  renderAdmin();
+  alert('✅ Cliente '+nome+' adicionado!\nEmail: '+email+'\nPassword: '+pw);
+}
+
+// ===== WORKOUT BUILDER =====
+function renderWorkoutBuilder(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  const el=document.getElementById('workout-builder');el.innerHTML='';
+  if(!c.workout.length){el.innerHTML='<p style="color:var(--gray);font-size:.88rem">Clica em "+ Dia" para começar a construir o plano.</p>';return}
+  (c.workout||[]).forEach((day,di)=>renderDayBlock(day,di));
+}
+function renderDayBlock(day,di){
+  const el=document.getElementById('workout-builder');
+  const block=document.createElement('div');block.className='day-block';block.id='day-block-'+di;
+  let exRows=(day.exercises||[]).map((ex,ei)=>`
+    <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:.8rem;margin-bottom:.5rem">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:.4rem;margin-bottom:.4rem">
+        <div><div style="font-size:.7rem;color:var(--gray);margin-bottom:.2rem">Exercício</div><input value="${ex.name}" placeholder="ex: Supino" onchange="updateEx(${di},${ei},'name',this.value)" style="width:100%;padding:.45rem .7rem;border:1px solid var(--border);border-radius:7px;font-size:.83rem;font-family:inherit;outline:none;color:var(--text)"></div>
+        <div><div style="font-size:.7rem;color:var(--gray);margin-bottom:.2rem">Séries</div><input value="${ex.sets}" placeholder="3" onchange="updateEx(${di},${ei},'sets',this.value)" style="width:100%;padding:.45rem .7rem;border:1px solid var(--border);border-radius:7px;font-size:.83rem;font-family:inherit;outline:none;color:var(--text)"></div>
+        <div><div style="font-size:.7rem;color:var(--gray);margin-bottom:.2rem">Reps / Tempo</div><input value="${ex.reps}" placeholder="12 ou 30s" onchange="updateEx(${di},${ei},'reps',this.value)" style="width:100%;padding:.45rem .7rem;border:1px solid var(--border);border-radius:7px;font-size:.83rem;font-family:inherit;outline:none;color:var(--text)"></div>
+        <div><div style="font-size:.7rem;color:var(--gray);margin-bottom:.2rem">Descanso</div><input value="${ex.rest||''}" placeholder="60s" onchange="updateEx(${di},${ei},'rest',this.value)" style="width:100%;padding:.45rem .7rem;border:1px solid var(--border);border-radius:7px;font-size:.83rem;font-family:inherit;outline:none;color:var(--text)"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.4rem">
+        <div style="flex:1"><div style="font-size:.7rem;color:var(--gray);margin-bottom:.2rem">Notas / Instrução</div><input value="${ex.notes||''}" placeholder="ex: Pegada larga, descer controlado" onchange="updateEx(${di},${ei},'notes',this.value)" style="width:100%;padding:.45rem .7rem;border:1px solid var(--border);border-radius:7px;font-size:.83rem;font-family:inherit;outline:none;color:var(--text)"></div>
+        <button onclick="removeEx(${di},${ei})" style="margin-top:1.1rem;background:none;border:1px solid rgba(230,0,40,.25);border-radius:7px;padding:.42rem .65rem;cursor:pointer;color:var(--red);font-size:.85rem;flex-shrink:0">✕</button>
+      </div>
+    </div>`).join('');
+  block.innerHTML=`<div class="day-title">
+    <input value="${day.title}" onchange="updateDayTitle(${di},this.value)" style="background:transparent;border:none;border-bottom:2px solid var(--border);font-weight:700;color:var(--navy);font-size:.95rem;font-family:inherit;outline:none;width:220px;padding-bottom:.2rem">
+    <div style="display:flex;gap:.4rem">
+      <button class="btn-sm btn-green" onclick="addExercise(${di})">+ Exercício</button>
+      <button class="btn-sm" style="background:rgba(230,0,40,.08);color:var(--red);border:1px solid rgba(230,0,40,.2)" onclick="removeDay(${di})">🗑️ Dia</button>
+    </div>
+  </div>
+  <div id="ex-list-${di}">${exRows||'<p style="color:var(--gray);font-size:.83rem;margin:.5rem 0">Clica em "+ Exercício" para adicionar.</p>'}</div>`;
+  el.appendChild(block);
+}
+function addDay(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  const n=c.workout.length+1;
+  c.workout.push({title:'Dia '+n,exercises:[]});
+  renderWorkoutBuilder();
+}
+function removeDay(di){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  if(!confirm('Remover este dia?'))return;
+  c.workout.splice(di,1);renderWorkoutBuilder();
+}
+function addExercise(di){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  c.workout[di].exercises.push({name:'',sets:'3',reps:'12',rest:'60s',notes:''});
+  renderWorkoutBuilder();
+}
+function removeEx(di,ei){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  c.workout[di].exercises.splice(ei,1);renderWorkoutBuilder();
+}
+function updateEx(di,ei,field,val){const c=clients.find(x=>x.id===selClientId);if(c)c.workout[di].exercises[ei][field]=val;}
+function updateDayTitle(di,val){const c=clients.find(x=>x.id===selClientId);if(c)c.workout[di].title=val;}
+function saveWorkout(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  alert('✅ Plano de treino de '+c.name+' guardado com '+c.workout.length+' dias!');
+}
+
+// ===== EVALUATION ADMIN =====
+function calcIMC(){
+  const p=parseFloat(document.getElementById('e-peso').value),h=parseFloat(document.getElementById('e-altura').value);
+  if(p&&h){const imc=(p/((h/100)**2)).toFixed(1);document.getElementById('e-imc').value=imc;}
+}
+document.getElementById('e-peso')?.addEventListener('input',calcIMC);
+document.getElementById('e-altura')?.addEventListener('input',calcIMC);
+function saveEvaluation(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  const eval_={id:Date.now(),data:document.getElementById('e-data').value||new Date().toLocaleDateString('pt-PT'),peso:document.getElementById('e-peso').value,altura:document.getElementById('e-altura').value,imc:document.getElementById('e-imc').value,gordura:document.getElementById('e-gordura').value,musculo:document.getElementById('e-musculo').value,peito:document.getElementById('e-peito').value,cintura:document.getElementById('e-cintura').value,anca:document.getElementById('e-anca').value,braco:document.getElementById('e-braco').value,coxa:document.getElementById('e-coxa').value,perna:document.getElementById('e-perna').value,obs:document.getElementById('e-obs').value};
+  if(!c.evaluation)c.evaluation=[];
+  c.evaluation.push(eval_);
+  alert('✅ Avaliação de '+c.name+' guardada! ('+eval_.data+')');
+  renderAdminEval();
+}
+function renderAdminEval(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  // photos
+  const apl=document.getElementById('admin-photo-list');
+  apl.innerHTML=(c.photos||[]).map((p,i)=>`<div style="display:flex;align-items:center;gap:.7rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem"><img src="${p.url}" style="width:40px;height:40px;object-fit:cover;border-radius:6px" onerror="this.style.display='none'"><span style="flex:1">${p.cat} · ${p.date||''}</span><button onclick="removePhoto(${i})" style="background:none;border:none;color:var(--gray);cursor:pointer">✕</button></div>`).join('')||'<p style="color:var(--gray);font-size:.83rem">Sem fotos ainda.</p>';
+  // history
+  const hist=document.getElementById('eval-history-admin');
+  if(!c.evaluation||!c.evaluation.length){hist.innerHTML='<p style="color:var(--gray);font-size:.83rem">Sem avaliações registadas.</p>';return;}
+  hist.innerHTML='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.82rem"><thead><tr style="background:var(--light)"><th style="padding:.5rem;text-align:left">Data</th><th style="padding:.5rem;text-align:center">Peso</th><th style="padding:.5rem;text-align:center">Altura</th><th style="padding:.5rem;text-align:center">IMC</th><th style="padding:.5rem;text-align:center">Gordura</th><th style="padding:.5rem;text-align:center">Cintura</th><th style="padding:.5rem;text-align:center">Ações</th></tr></thead><tbody>'+c.evaluation.map((e,i)=>`<tr style="border-bottom:1px solid var(--border)"><td style="padding:.5rem">${e.data}</td><td style="padding:.5rem;text-align:center">${e.peso}kg</td><td style="padding:.5rem;text-align:center">${e.altura}cm</td><td style="padding:.5rem;text-align:center">${e.imc}</td><td style="padding:.5rem;text-align:center">${e.gordura}%</td><td style="padding:.5rem;text-align:center">${e.cintura}cm</td><td style="padding:.5rem;text-align:center"><button onclick="deleteEval(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem">🗑️</button></td></tr>`).join('')+'</tbody></table></div>';
+}
+function addPhoto(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  const url=document.getElementById('photo-url-input').value.trim();
+  const cat=document.getElementById('photo-cat').value;
+  if(!url){alert('Cola um URL de imagem.');return}
+  if(!c.photos)c.photos=[];
+  c.photos.push({url,cat,date:new Date().toLocaleDateString('pt-PT')});
+  document.getElementById('photo-url-input').value='';
+  renderAdminEval();
+}
+function removePhoto(i){const c=clients.find(x=>x.id===selClientId);if(c){c.photos.splice(i,1);renderAdminEval();}}
+function deleteEval(i){const c=clients.find(x=>x.id===selClientId);if(c&&confirm('Apagar esta avaliação?')){c.evaluation.splice(i,1);renderAdminEval();}}
+
+// ===== ADMIN MESSAGES =====
+function renderAdminMsgs(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  const list=document.getElementById('msgs-admin-list');list.innerHTML='';
+  (c.msgs||[]).forEach(m=>{const div=document.createElement('div');div.className='msg-bubble '+(m.from==='trainer'?'msg-trainer':'msg-me');div.textContent=(m.from==='client'?'👤 '+c.name.split(' ')[0]+': ':'')+m.text;list.appendChild(div);});
+  list.scrollTop=list.scrollHeight;
+}
+function sendAdminMsg(){
+  const c=clients.find(x=>x.id===selClientId);if(!c)return;
+  const inp=document.getElementById('msg-admin-input'),txt=inp.value.trim();if(!txt)return;
+  c.msgs.push({from:'trainer',text:txt});inp.value='';renderAdminMsgs();
+}
+
+// INIT
+calcPrice();
+</script>
+</body>
+</html>
